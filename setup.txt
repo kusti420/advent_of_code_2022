@@ -1,4 +1,3 @@
-import os
 import importlib.util
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 folder = int(os.path.dirname(os.path.realpath(__file__)).split("\\")[-1])
