@@ -16,5 +16,4 @@ def get_input(folder):
         return
     with open(f"{dir}/{folder}.txt", "w", encoding="utf-8", newline="") as f:
         f.write(requests.get(f"https://adventofcode.com/2022/day/{folder}/input", cookies={"session": get_session_id()}).text)
-# get_input(1)
 os.chdir(old_dir)
