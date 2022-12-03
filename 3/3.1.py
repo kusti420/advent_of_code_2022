@@ -8,7 +8,7 @@ if __name__ == "__main__":
                 matches.append(char)
                 break
     matches = [ord(match) % ord('a') + 1 if match.islower() else ord(match) % ord('A') + 26 + 1 for match in matches]
-    print(sum(matches))
+    print(sum(matches)) # 7824
 
 if __name__ != "__main__":
     print("That would break the script. Please run it directly.")
