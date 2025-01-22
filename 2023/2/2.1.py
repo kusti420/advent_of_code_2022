@@ -24,7 +24,7 @@ if __name__ == "__main__":
         line = [string.split(", ") for string in line]
         line = [[string.split(" ") for string in lst] for lst in line]
         
-        print(line, len(line))
+        # print(line, len(line))
         
         def parse(lst):
             lst = sorted(lst)
@@ -45,7 +45,6 @@ if __name__ == "__main__":
             return (r, g, b)
             
             
-            pass
         
         parsed_game = []
         for ln in line:
@@ -57,9 +56,6 @@ if __name__ == "__main__":
         r_max = 0
         g_max = 0
         b_max = 0
-        r = 0
-        g = 0
-        b = 0
         for s in parsed_game:
             # print(s)
             if s[0] > r_max:
@@ -73,7 +69,7 @@ if __name__ == "__main__":
 
         if not impossible:
             possible_games.append(gameID)
-    print(sum(possible_games)) # 2348
+    print(sum(possible_games), len(possible_games), possible_games) # 2348
 
 if __name__ != "__main__":
     print("That would break the script. Please run it directly.")
