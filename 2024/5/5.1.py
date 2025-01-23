@@ -1,11 +1,13 @@
 import os
 idk = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}"
-year = idk.split("\\")[-1]
+year = 2024
 idk = idk.replace(f"\\{year}", "")
 print(idk)
 exec(open(f"{idk}\\setup.txt").read())
+import time
 
 import copy
+start = time.time()
 
 rules = [[int(y) for y in x.split("|")] for x in data[:data.index("")]]
 cases = [[int(y) for y in x.split(",")] for x in data[data.index("")+1:]]
@@ -13,11 +15,6 @@ cases = [[int(y) for y in x.split(",")] for x in data[data.index("")+1:]]
 
 r = {}
 for rule in rules:
-    # if rule[0] not in r:
-    #     r[rule[0]] = [rule[1]]
-    # else:
-    #     r[rule[0]] = r[rule[0]] + [rule[1]]
-    
     if rule[0] not in r:
         r[rule[0]] = set([rule[1]])
     elif rule[1] not in r:
@@ -40,7 +37,6 @@ incorrect = []
 # part 1
 for case in cases:
     def iscorrect(case):
-        iscorrect = True
         for i in range(len(case)):
             for b in range(len(case)):
                 if i == b:
@@ -49,19 +45,19 @@ for case in cases:
                     if [case[b], case[i]] in rules:
                         continue
                     else:
-                        iscorrect = False
+                        return False
                 if b > i:
                     if [case[i], case[b]] in rules:
                         continue
                     else:
-                        iscorrect = False
+                        return False
         return iscorrect
     if iscorrect(case):
         correct.append(case)
     else: # part 2
         incorrect.append(case)
-print(sum([x[len(x) // 2] for x in correct])) # part 1 answer
-
+print(sum([x[len(x) // 2] for x in correct])) # part 1 answer # 5275
+mid = time.time()
 # print(incorrect)
 
 # case = incorrect[0]
@@ -91,4 +87,7 @@ for case in incorrect:
     fixed.append(tmp)
     # print(case, tmp)
 
-print(sum([x[len(x) // 2] for x in fixed]))
+print(sum([x[len(x) // 2] for x in fixed])) # 6191 part2
+end = time.time()
+print(mid - start, end - start)
+

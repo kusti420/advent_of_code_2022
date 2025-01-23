@@ -6,6 +6,7 @@ old_dir = os.getcwd()
 os.chdir(os.path.dirname(os.path.realpath(__file__)))
 path = os.path.dirname(os.path.realpath(__file__))
 YEAR = time.localtime().tm_year
+YEAR = 2024
 
 def get_session_id():
     with open(f"{path}/session_id.txt", "r", encoding="utf-8", newline="") as f:
