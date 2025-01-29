@@ -1,1 +1,0 @@
-<h1>Advent Of Code solutions</h1>

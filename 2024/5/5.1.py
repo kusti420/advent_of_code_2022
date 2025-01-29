@@ -56,7 +56,7 @@ for case in cases:
         correct.append(case)
     else: # part 2
         incorrect.append(case)
-print(sum([x[len(x) // 2] for x in correct])) # part 1 answer # 5275
+print(sum([x[len(x) >> 1] for x in correct])) # part 1 answer # 5275
 mid = time.time()
 # print(incorrect)
 
@@ -87,7 +87,7 @@ for case in incorrect:
     fixed.append(tmp)
     # print(case, tmp)
 
-print(sum([x[len(x) // 2] for x in fixed])) # 6191 part2
+print(sum([x[len(x) >> 1] for x in fixed])) # 6191 part2
 end = time.time()
 print(mid - start, end - start)
 
