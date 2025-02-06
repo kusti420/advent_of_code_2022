@@ -1,10 +1,13 @@
 if __name__ == "__main__":
     import os
     idk = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}"
-    year = idk.split("/")[-1]
-    idk = idk.replace(f"/{year}", "")
+    year = idk.split("\\")[-1]
+    idk = idk.replace(f"\\{year}", "")
     print(idk)
-    import os; exec(open(f"{idk}/setup.txt").read())
+    exec(open(f"{idk}\\setup.txt").read())
+    import time
+    start = time.time()
+    import sys
 
     data = [[int(x) for x in line.split(" ")] for line in data]
     safe = 0
