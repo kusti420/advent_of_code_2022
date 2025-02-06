@@ -15,13 +15,13 @@ trailheads = [[x, y] for y, line in enumerate(data) for x, char in enumerate(lin
 trail_dict = {}
 for x, y in trailheads:
     if (x, y) not in trail_dict:
-        trail_dict[(x, y)] = set()
+        trail_dict[(x, y)] = []
 # print(trail_dict)
 
 def move(start_x:int, start_y:int, x:int, y:int, current_value:int, end_value:int):
     global trail_dict
     if current_value == end_value:
-        trail_dict[(start_x, start_y)].add((x, y))
+        trail_dict[(start_x, start_y)].append((x, y))
         return trail_dict
     else:
         if upcheck2x2(data, x, y, current_value + 1) == True:
@@ -43,6 +43,6 @@ sm = 0
 for k, v in trail_dict.items():
     if len(v) > 0:
         sm += len(v)
-print(sm) # part 1 # 459
+print(sm) # part 2 # 1034
 print(f.end())
 

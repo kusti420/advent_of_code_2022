@@ -1,12 +1,9 @@
-import os
-idk = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}"
-year = idk.split("\\")[-1]
-idk = idk.replace(f"\\{year}", "")
-print(idk)
-exec(open(f"{idk}\\setup.txt").read())
-import time
-start = time.time()
-import sys
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+from functions import *
+f = init(os.getcwd())
+data = f.data
 sys.setrecursionlimit(15000000)
 
 data = data[0]
@@ -17,10 +14,10 @@ ln = 0
 for i, char in enumerate(data):
     if i % 2 == 1:
         # [initial_uncompressed.append("𘚟") for _ in range(int(char))]
-        initial_uncompressed.append(["𘚟", int(char)])
+        initial_uncompressed.append(("𘚟", int(char)))
     else:
         # [[initial_uncompressed.append(chr(i // 2)), ln := ln + 1] for _ in range(int(char))]
-        initial_uncompressed.append([chr(i // 2), int(char)])
+        initial_uncompressed.append((chr(i // 2), int(char)))
         ln += int(char)
 print(initial_uncompressed)
 # exit()
@@ -76,7 +73,7 @@ def swap(initial_uncompressed, l):
     
 
 compressed = swap(initial_uncompressed, 0)
-print("compressed: ", [[ord(x[0]), x[1]] for x in compressed])
+print("compressed: ", [(ord(x[0]), x[1]) for x in compressed])
 
 # checksum = 0
 result = 0
@@ -90,6 +87,11 @@ for n in compressed:
         result += i*ord(n[0])
         i += 1
 
-print(result) # 6288707484810
-end = time.time()
-print(end - start) # 12.67971420288086
+def is_correct(initial_uncompressed):
+    for idx in range(len(initial_uncompressed) - ln):
+        if initial_uncompressed[idx + ln] != "𘚟":
+            return False
+    return True
+
+print(result, is_correct(compressed)) # 6288707484810
+print(f.end()) # 12.67971420288086

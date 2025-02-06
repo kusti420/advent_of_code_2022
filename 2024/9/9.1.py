@@ -1,12 +1,9 @@
-import os
-idk = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}"
-year = idk.split("\\")[-1]
-idk = idk.replace(f"\\{year}", "")
-print(idk)
-exec(open(f"{idk}\\setup.txt").read())
-import time
-start = time.time()
-import sys
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+from functions import *
+f = init(os.getcwd())
+data = f.data
 sys.setrecursionlimit(15000000)
 
 data = data[0]
@@ -19,7 +16,7 @@ for i, char in enumerate(data):
         [initial_uncompressed.append("𘚟") for _ in range(int(char))]
     else:
         [[initial_uncompressed.append(chr(i // 2)), ln := ln + 1] for _ in range(int(char))]
-# print(initial_uncompressed)
+print(initial_uncompressed)
 
 
 def swap(initial_uncompressed, l):
@@ -77,5 +74,4 @@ for n in compressed:
     i += 1
 
 print(result) # 6288707484810
-end = time.time()
-print(end - start) # 12.67971420288086
+print(f.end()) # 12.67971420288086

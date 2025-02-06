@@ -1,9 +1,9 @@
-import os
-idk = f"{os.path.dirname(os.path.dirname(os.path.realpath(__file__)))}"
-year = 2024
-idk = idk.replace(f"\\{year}", "")
-print(idk)
-exec(open(f"{idk}\\setup.txt").read())
+import os, sys
+sys.path.append(os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__)))))
+os.chdir(os.path.dirname(os.path.realpath(__file__)))
+from functions import *
+f = init(os.getcwd())
+data = f.data
 import time
 
 import copy
@@ -23,14 +23,11 @@ for rule in rules:
     else:
         r[rule[0]] = r[rule[0]].union(set([rule[1]]))
 
-# print(r)
 
 tmp = set()
 for rule in rules:
     tmp.add(rule[0])
     tmp.add(rule[1])
-# print(tmp)
-# print(len(r), len(tmp))
 
 correct = []
 incorrect = []
@@ -56,11 +53,9 @@ for case in cases:
         correct.append(case)
     else: # part 2
         incorrect.append(case)
-print(sum([x[len(x) >> 1] for x in correct])) # part 1 answer # 5275
+print(sum([x[len(x) >> 1] for x in correct])) # part 1 # 5275
 mid = time.time()
-# print(incorrect)
 
-# case = incorrect[0]
 fixed = []
 for case in incorrect:
     tmp = copy.copy(case)
@@ -75,7 +70,6 @@ for case in incorrect:
                     tmpval = tmp[b]
                     tmp[b] = tmp[i]
                     tmp[i] = tmpval
-                    # print(case, tmp)
             elif b > i:
                 if [tmp[i], tmp[b]] in rules:
                     continue
@@ -83,11 +77,9 @@ for case in incorrect:
                     tmpval = tmp[b]
                     tmp[b] = tmp[i]
                     tmp[i] = tmpval
-                    # print(case, tmp)
     fixed.append(tmp)
-    # print(case, tmp)
 
-print(sum([x[len(x) >> 1] for x in fixed])) # 6191 part2
+print(sum([x[len(x) >> 1] for x in fixed])) # part 2 # 6191
 end = time.time()
 print(mid - start, end - start)
 
