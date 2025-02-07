@@ -5,7 +5,6 @@ from functions import *
 f = init(os.getcwd())
 data = f.data
 data = [[int(y) for y in x.split(" ")] for x in data][0]
-import copy
 
 def rule1(stone):
     if stone == 0:
@@ -38,15 +37,10 @@ dt = {}
 for x in data:
     dt[x] = 1
 print(dt)
-# after = {}
-count = {}
 cache = {}
-for stone in data:
-    count[stone] = 1
-    # cache[stone] = []
+
 def blink(data, start = 1, end = 25):
     dt = {}
-    count = {}
     for stone in data:
         if stone in cache:
             new_stone = cache[stone]
@@ -55,19 +49,14 @@ def blink(data, start = 1, end = 25):
             cache[stone] = new_stone
         tmp = data[stone]
         for st in new_stone:
-            # print(st)
             if st not in dt:
                 dt[st] = tmp
             else:
                 dt[st] += tmp
-            # data.pop(stone)
-            
-    # data = dt
     print(start)
     if start == end:
         return dt
     return blink(dt, start + 1, end)
-# count.pop(data[0], None)
 
 x = blink(dt, 1, 75)
 # print(x)
