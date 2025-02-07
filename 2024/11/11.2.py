@@ -5,54 +5,71 @@ from functions import *
 f = init(os.getcwd())
 data = f.data
 data = [[int(y) for y in x.split(" ")] for x in data][0]
+import copy
 
-print(data)
-
-cache = {}
-
-def blink(blinks = 1, end = 25, stones = data):
-    global cache
-    tmp = []
-    def rule1(stone):
-        if stone == 0:
-            return [1]
-        return None
-    def rule2(stone):
+def rule1(stone):
+    if stone == 0:
+        # return [1]
+        return True
+    return False
+def rule2(rule1, stone):
+    if rule1 is False:
         stone_string = str(stone)
         if len(stone_string) % 2 == 0:
-            return [int(stone_string[:len(stone_string) // 2]), int(stone_string[len(stone_string) // 2:])]
-        return None
-    def rule3(rule1, rule2, stone):
-        if rule1 is None and rule2 is None:
-            return [stone * 2024]
-        return None
-    
-    for stone in stones:
-        if stone in cache:
-            tmp.extend(cache[stone])
-            if blinks == end:
-                return tmp
-            return blink(blinks + 1, end, tmp)
-        r1 = rule1(stone)
-        r2 = rule2(stone)
-        r3 = rule3(r1, r2, stone)
-        if r1 is not None:
-            tmp.extend(r1)
-            cache[stone] = r1
-        elif r1 is None and r2 is not None:
-            tmp.extend(r2)
-            cache[stone] = r2
-        elif r1 is None and r2 is None:
-            tmp.extend(r3)
-            cache[stone] = r3
-            
-    # print(tmp)
-    # print()
-    print(blinks)
-    if blinks == end:
-        return tmp
-    return blink(blinks + 1, end, tmp)
-    pass
+            # return [int(stone_string[:len(stone_string) // 2]), int(stone_string[len(stone_string) // 2:])]
+            return True
+    return False
+# def rule3(rule1, rule2, stone):
+#     if rule1 is False and rule2 is False:
+#         # return [stone * 2024]
+#         return True
+#     return False
 
-stones_after_blinks = blink()
-print(len(stones_after_blinks))
+def r(r1, r2, stone):
+    if r1:
+        return [1]
+    elif r2:
+        stone_string = str(stone)
+        return [int(stone_string[:len(stone_string) // 2]), int(stone_string[len(stone_string) // 2:])]
+    else:
+        return [stone * 2024]
+
+dt = {}
+for x in data:
+    dt[x] = 1
+print(dt)
+# after = {}
+count = {}
+cache = {}
+for stone in data:
+    count[stone] = 1
+    # cache[stone] = []
+def blink(data, start = 1, end = 25):
+    dt = {}
+    count = {}
+    for stone in data:
+        if stone in cache:
+            new_stone = cache[stone]
+        else:
+            new_stone = r(rule1(stone), rule2(rule1(stone), stone), stone)
+            cache[stone] = new_stone
+        tmp = data[stone]
+        for st in new_stone:
+            # print(st)
+            if st not in dt:
+                dt[st] = tmp
+            else:
+                dt[st] += tmp
+            # data.pop(stone)
+            
+    # data = dt
+    print(start)
+    if start == end:
+        return dt
+    return blink(dt, start + 1, end)
+# count.pop(data[0], None)
+
+x = blink(dt, 1, 75)
+# print(x)
+print(sum([v for v in x.values()])) # 221291560078593
+print(f.end())
